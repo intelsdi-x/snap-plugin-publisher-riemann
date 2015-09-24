@@ -15,6 +15,10 @@
 			"Rev": "4f098da2bbb51d787be003e4abfbc25d01837564"
 		},
 		{
+			"ImportPath": "github.com/intelsdi-x/pulse",
+			"Rev": "bfec09b41583fadc89ce42f50d12a51edd42f869"
+		},
+		{
 			"ImportPath": "github.com/jtolds/gls",
 			"Rev": "f1ac7f4f24f50328e6bc838ca4437d1612a0243c"
 		},

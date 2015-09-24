@@ -4,7 +4,7 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/amir/raidman",
-			"Rev": "57b78a08c96234a4cf19a7c33c8eb28ce4214cbc"
+			"Rev": "2c924ed306089881ad89210d6ec1ada34f803403"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",

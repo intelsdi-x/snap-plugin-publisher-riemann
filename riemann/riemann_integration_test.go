@@ -13,7 +13,6 @@ import (
 
 	"github.com/intelsdi-x/pulse/control/plugin"
 	"github.com/intelsdi-x/pulse/control/plugin/cpolicy"
-	"github.com/intelsdi-x/pulse/core/cdata"
 	"github.com/intelsdi-x/pulse/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 
@@ -21,7 +20,7 @@ import (
 )
 
 // integration test
-func TestPublish(t *testing.T) {
+func TestRiemannPublish(t *testing.T) {
 	// This integration test requires a Riemann Server
 	broker := os.Getenv("PULSE_TEST_RIEMANN")
 	if broker == "" {
@@ -29,26 +28,24 @@ func TestPublish(t *testing.T) {
 		return
 	}
 
-	Convey("Publish to Riemann", t, func() {
-		Convey("publish and consume", func() {
-			r := NewRiemannPublisher()
-			cdn := cdata.NewNode()
-			cdn.AddItem("broker", ctypes.ConfigValueStr{Value: broker})
-			cdn.AddItem("host", ctypes.ConfigValueStr{Value: "bacon-powered"})
-			cp := r.GetConfigPolicy()
-			p := cp.Get([]string{""})
-			f, cErr := p.Process(cdn.Table())
-			So(getProcessErrorStr(cErr), ShouldEqual, "")
-
-			metrics := []plugin.PluginMetricType{
-				*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "", 100),
-			}
-			var buf bytes.Buffer
-			enc := gob.NewEncoder(&buf)
-			enc.Encode(metrics)
-			err := r.Publish(plugin.PulseGOBContentType, buf.Bytes(), *f)
+	var buf bytes.Buffer
+	buf.Reset()
+	r := NewRiemannPublisher()
+	config := make(map[string]ctypes.ConfigValue)
+	config["broker"] = ctypes.ConfigValueStr{Value: broker}
+	cp := r.GetConfigPolicy()
+	cfg, _ := cp.Get([]string{""}).Process(config)
+	metrics := []plugin.PluginMetricType{
+		*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "bacon-powered", 100),
+	}
+	enc := gob.NewEncoder(&buf)
+	enc.Encode(metrics)
+	err := r.Publish(plugin.PulseGOBContentType, buf.Bytes(), *cfg)
+	Convey("Publish metric to Riemann", t, func() {
+		Convey("So err should not be returned", func() {
 			So(err, ShouldBeNil)
-
+		})
+		Convey("So metric retrieved equals metric published", func() {
 			c, _ := raidman.Dial("tcp", broker)
 			events, _ := c.Query("host = \"bacon-powered\"")
 			So(len(events), ShouldBeGreaterThan, 0)

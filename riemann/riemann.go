@@ -26,16 +26,15 @@ func Meta() *plugin.PluginMeta {
 	return plugin.NewPluginMeta(PluginName, PluginVersion, PluginType, []string{plugin.PulseGOBContentType}, []string{plugin.PulseGOBContentType})
 }
 
-type Riemann struct{}
+type riemannPublisher struct{}
 
 // NewRiemannPublisher does something cool
-func NewRiemannPublisher() *Riemann {
-	var r *Riemann
-	return r
+func NewRiemannPublisher() *riemannPublisher {
+	return &riemannPublisher{}
 }
 
 // GetConfigPolicy returns the config policy for the Riemann Publisher Plugin
-func (r *Riemann) GetConfigPolicy() cpolicy.ConfigPolicy {
+func (r *riemannPublisher) GetConfigPolicy() cpolicy.ConfigPolicy {
 	cp := cpolicy.New()
 	config := cpolicy.NewPolicyNode()
 	// Host metric applies to
@@ -54,7 +53,7 @@ func (r *Riemann) GetConfigPolicy() cpolicy.ConfigPolicy {
 }
 
 // Publish serializes the data and calls publish to send events to Riemann
-func (r *Riemann) Publish(contentType string, content []byte, config map[string]ctypes.ConfigValue) error {
+func (r *riemannPublisher) Publish(contentType string, content []byte, config map[string]ctypes.ConfigValue) error {
 	logger := log.New()
 	//err := r.publish(event, broker)
 	//return err
@@ -83,7 +82,7 @@ func (r *Riemann) Publish(contentType string, content []byte, config map[string]
 }
 
 // publish sends events to riemann
-func (r *Riemann) publish(event *raidman.Event, broker string) error {
+func (r *riemannPublisher) publish(event *raidman.Event, broker string) error {
 	c, err := raidman.Dial("tcp", broker)
 	defer c.Close()
 	if err != nil {

@@ -37,17 +37,13 @@ func NewRiemannPublisher() *riemannPublisher {
 func (r *riemannPublisher) GetConfigPolicy() cpolicy.ConfigPolicy {
 	cp := cpolicy.New()
 	config := cpolicy.NewPolicyNode()
-	// Host metric applies to
-	r1, err := cpolicy.NewStringRule("host", true)
-	handleErr(err)
-	r1.Description = "Host the metric was collected from"
 
 	// Riemann server to publish event to
-	r2, err := cpolicy.NewStringRule("broker", true)
+	r1, err := cpolicy.NewStringRule("broker", true)
 	handleErr(err)
-	r2.Description = "Broker in the format of broker-ip:port (ex: 192.168.1.1:5555)"
+	r1.Description = "Broker in the format of broker-ip:port (ex: 192.168.1.1:5555)"
 
-	config.Add(r1, r2)
+	config.Add(r1)
 	cp.Add([]string{""}, config)
 	return *cp
 }
@@ -93,7 +89,7 @@ func (r *riemannPublisher) publish(event *raidman.Event, broker string) error {
 
 func createEvent(m plugin.PluginMetricType, config map[string]ctypes.ConfigValue) *raidman.Event {
 	return &raidman.Event{
-		Host:    config["host"].(ctypes.ConfigValueStr).Value,
+		Host:    m.Source(),
 		Service: strings.Join(m.Namespace(), "/"),
 		Metric:  m.Data(),
 	}

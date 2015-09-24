@@ -83,5 +83,6 @@ if [[ $TEST_SUITE == "unit" ]]; then
 	# fi
 elif [[ $TEST_SUITE == "integration" ]]; then
 	cd $PULSE_PLUGIN_SOURCE
+	docker run -d --net=host rlister/riemann
 	PULSE_TEST_RIEMANN="127.0.0.1:5555" go test -v --tags=integration ./...
 fi

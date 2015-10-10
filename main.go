@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
+	"github.com/intelsdi-x/pulse-plugin-publisher-riemann/riemann"
 	"github.com/intelsdi-x/pulse/control/plugin"
-	"github.com/intelsdi-x/pulse/plugin/publisher/pulse-publisher-riemann/riemann"
 )
 
 func main() {

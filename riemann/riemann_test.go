@@ -28,17 +28,16 @@ func TestRiemannPlugin(t *testing.T) {
 		Convey("So Riemann Publisher shoud be of type riemannPublisher", func() {
 			So(rp, ShouldHaveSameTypeAs, &riemannPublisher{})
 		})
-		//configPolicy, err := rp.GetConfigPolicy()
-		configPolicy := rp.GetConfigPolicy()
+		configPolicy, err := rp.GetConfigPolicy()
 		Convey("GetConfigPolicy() should return a config policy", func() {
 			Convey("So config policy should not be nil", func() {
 				So(configPolicy, ShouldNotBeNil)
 			})
-			//Convey("So GetConfigPolicy() should not return an error", func() {
-			//	So(err, ShouldBeNil)
-			//})
+			Convey("So GetConfigPolicy() should not return an error", func() {
+				So(err, ShouldBeNil)
+			})
 			Convey("So config policy should be of cpolicy.ConfigPolicy type", func() {
-				So(configPolicy, ShouldHaveSameTypeAs, cpolicy.ConfigPolicy{})
+				So(configPolicy, ShouldHaveSameTypeAs, &cpolicy.ConfigPolicy{})
 			})
 			testConfig := make(map[string]ctypes.ConfigValue)
 			testConfig["broker"] = ctypes.ConfigValueStr{Value: "127.0.0.1:5555"}

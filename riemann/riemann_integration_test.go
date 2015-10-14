@@ -33,7 +33,7 @@ func TestRiemannPublish(t *testing.T) {
 	r := NewRiemannPublisher()
 	config := make(map[string]ctypes.ConfigValue)
 	config["broker"] = ctypes.ConfigValueStr{Value: broker}
-	cp := r.GetConfigPolicy()
+	cp, _ := r.GetConfigPolicy()
 	cfg, _ := cp.Get([]string{""}).Process(config)
 	metrics := []plugin.PluginMetricType{
 		*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "bacon-powered", 100),

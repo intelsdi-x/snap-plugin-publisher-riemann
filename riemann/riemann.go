@@ -17,7 +17,7 @@ import (
 
 const (
 	PluginName    = "riemann"
-	PluginVersion = 2
+	PluginVersion = 3
 	PluginType    = plugin.PublisherPluginType
 )
 
@@ -34,7 +34,7 @@ func NewRiemannPublisher() *riemannPublisher {
 }
 
 // GetConfigPolicy returns the config policy for the Riemann Publisher Plugin
-func (r *riemannPublisher) GetConfigPolicy() cpolicy.ConfigPolicy {
+func (r *riemannPublisher) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	cp := cpolicy.New()
 	config := cpolicy.NewPolicyNode()
 
@@ -45,7 +45,7 @@ func (r *riemannPublisher) GetConfigPolicy() cpolicy.ConfigPolicy {
 
 	config.Add(r1)
 	cp.Add([]string{""}, config)
-	return *cp
+	return cp, nil
 }
 
 // Publish serializes the data and calls publish to send events to Riemann

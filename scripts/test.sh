@@ -82,8 +82,8 @@ if [[ $TEST_SUITE == "unit" ]]; then
 	#     done
 	# fi
 elif [[ $TEST_SUITE == "integration" ]]; then
-	cd $PULSE_PLUGIN_SOURCE
+	cd $SNAP_PLUGIN_SOURCE
 	docker run -d --net=host rlister/riemann
 	sleep 10
-	PULSE_TEST_RIEMANN="127.0.0.1:5555" go test -v --tags=integration ./...
+	SNAP_TEST_RIEMANN="127.0.0.1:5555" go test -v --tags=integration ./...
 fi

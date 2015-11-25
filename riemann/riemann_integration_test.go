@@ -29,9 +29,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/intelsdi-x/pulse/control/plugin"
-	"github.com/intelsdi-x/pulse/control/plugin/cpolicy"
-	"github.com/intelsdi-x/pulse/core/ctypes"
+	"github.com/intelsdi-x/snap/control/plugin"
+	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 
 	"github.com/amir/raidman"
@@ -40,7 +40,7 @@ import (
 // integration test
 func TestRiemannPublish(t *testing.T) {
 	// This integration test requires a Riemann Server
-	broker := os.Getenv("PULSE_TEST_RIEMANN")
+	broker := os.Getenv("SNAP_TEST_RIEMANN")
 	if broker == "" {
 		fmt.Println("Skipping integration tests")
 		return
@@ -58,7 +58,7 @@ func TestRiemannPublish(t *testing.T) {
 	}
 	enc := gob.NewEncoder(&buf)
 	enc.Encode(metrics)
-	err := r.Publish(plugin.PulseGOBContentType, buf.Bytes(), *cfg)
+	err := r.Publish(plugin.SnapGOBContentType, buf.Bytes(), *cfg)
 	Convey("Publish metric to Riemann", t, func() {
 		Convey("So err should not be returned", func() {
 			So(err, ShouldBeNil)

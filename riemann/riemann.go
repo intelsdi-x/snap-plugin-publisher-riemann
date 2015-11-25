@@ -28,20 +28,20 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/amir/raidman"
 
-	"github.com/intelsdi-x/pulse/control/plugin"
-	"github.com/intelsdi-x/pulse/control/plugin/cpolicy"
-	"github.com/intelsdi-x/pulse/core/ctypes"
+	"github.com/intelsdi-x/snap/control/plugin"
+	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core/ctypes"
 )
 
 const (
 	PluginName    = "riemann"
-	PluginVersion = 4
+	PluginVersion = 5
 	PluginType    = plugin.PublisherPluginType
 )
 
 // Meta returns the metadata details for the Riemann Publisher Plugin
 func Meta() *plugin.PluginMeta {
-	return plugin.NewPluginMeta(PluginName, PluginVersion, PluginType, []string{plugin.PulseGOBContentType}, []string{plugin.PulseGOBContentType})
+	return plugin.NewPluginMeta(PluginName, PluginVersion, PluginType, []string{plugin.SnapGOBContentType}, []string{plugin.SnapGOBContentType})
 }
 
 type riemannPublisher struct{}
@@ -74,7 +74,7 @@ func (r *riemannPublisher) Publish(contentType string, content []byte, config ma
 	logger.Println("Riemann Publishing Started")
 	var metrics []plugin.PluginMetricType
 	switch contentType {
-	case plugin.PulseGOBContentType:
+	case plugin.SnapGOBContentType:
 		dec := gob.NewDecoder(bytes.NewBuffer(content))
 		if err := dec.Decode(&metrics); err != nil {
 			logger.Printf("Error decoding: error=%v content=%v", err, content)

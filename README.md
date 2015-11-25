@@ -1,4 +1,4 @@
-## Pulse Plugin - Riemann Publisher
+## snap plugin - Riemann Publisher
 
 ### Description
 

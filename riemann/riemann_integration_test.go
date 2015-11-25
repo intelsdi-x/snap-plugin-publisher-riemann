@@ -54,7 +54,7 @@ func TestRiemannPublish(t *testing.T) {
 	cp, _ := r.GetConfigPolicy()
 	cfg, _ := cp.Get([]string{""}).Process(config)
 	metrics := []plugin.PluginMetricType{
-		*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "bacon-powered", 100),
+		*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "bacon-powered", nil, nil, 100),
 	}
 	enc := gob.NewEncoder(&buf)
 	enc.Encode(metrics)

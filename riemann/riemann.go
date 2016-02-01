@@ -35,7 +35,7 @@ import (
 
 const (
 	PluginName    = "riemann"
-	PluginVersion = 6
+	PluginVersion = 7
 	PluginType    = plugin.PublisherPluginType
 )
 

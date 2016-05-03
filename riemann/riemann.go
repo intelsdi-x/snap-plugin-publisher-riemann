@@ -23,19 +23,19 @@ import (
 	"encoding/gob"
 	"errors"
 	"fmt"
-	"strings"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/amir/raidman"
 
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
 )
 
 const (
 	PluginName    = "riemann"
-	PluginVersion = 7
+	PluginVersion = 8
 	PluginType    = plugin.PublisherPluginType
 )
 
@@ -72,7 +72,7 @@ func (r *riemannPublisher) Publish(contentType string, content []byte, config ma
 	//err := r.publish(event, broker)
 	//return err
 	logger.Println("Riemann Publishing Started")
-	var metrics []plugin.PluginMetricType
+	var metrics []plugin.MetricType
 	switch contentType {
 	case plugin.SnapGOBContentType:
 		dec := gob.NewDecoder(bytes.NewBuffer(content))
@@ -105,10 +105,10 @@ func (r *riemannPublisher) publish(event *raidman.Event, broker string) error {
 	return c.Send(event)
 }
 
-func createEvent(m plugin.PluginMetricType, config map[string]ctypes.ConfigValue) *raidman.Event {
+func createEvent(m plugin.MetricType, config map[string]ctypes.ConfigValue) *raidman.Event {
 	return &raidman.Event{
-		Host:    m.Source(),
-		Service: strings.Join(m.Namespace(), "/"),
+		Host:    m.Tags()[core.STD_TAG_PLUGIN_RUNNING_ON],
+		Service: m.Namespace().String(),
 		Metric:  m.Data(),
 	}
 }

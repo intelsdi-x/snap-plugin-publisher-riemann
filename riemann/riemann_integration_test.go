@@ -31,6 +31,7 @@ import (
 
 	"github.com/intelsdi-x/snap/control/plugin"
 	"github.com/intelsdi-x/snap/control/plugin/cpolicy"
+	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/ctypes"
 	. "github.com/smartystreets/goconvey/convey"
 
@@ -53,8 +54,10 @@ func TestRiemannPublish(t *testing.T) {
 	config["broker"] = ctypes.ConfigValueStr{Value: broker}
 	cp, _ := r.GetConfigPolicy()
 	cfg, _ := cp.Get([]string{""}).Process(config)
-	metrics := []plugin.PluginMetricType{
-		*plugin.NewPluginMetricType([]string{"intel", "cpu", "temp"}, time.Now(), "bacon-powered", nil, nil, 100),
+	tags := map[string]string{}
+	tags[core.STD_TAG_PLUGIN_RUNNING_ON] = "bacon-powered"
+	metrics := []plugin.MetricType{
+		*plugin.NewMetricType(core.NewNamespace("intel", "cpu", "temp"), time.Now(), tags, "some unit", 100),
 	}
 	enc := gob.NewEncoder(&buf)
 	enc.Encode(metrics)

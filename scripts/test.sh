@@ -82,7 +82,14 @@ if [[ $TEST_SUITE == "unit" ]]; then
 	# fi
 elif [[ $TEST_SUITE == "integration" ]]; then
 	cd $SNAP_PLUGIN_SOURCE
+	if [[ $SNAP_PLUGIN_SOURCE == "" ]]; then
+	echo "env var SNAP_PLUGIN_SOURCE not set, should be location of snap-plugin-publisher-riemann"
+	exit 1
+	fi
+	echo "command: docker run -d --net=host rlister/riemann"
 	docker run -d --net=host rlister/riemann
 	sleep 10
-	SNAP_TEST_RIEMANN="127.0.0.1:5555" go test -v --tags=integration ./...
+	echo "command: SNAP_TEST_RIEMANN=\"127.0.0.1:5555\" go test -v --tags=integration ./..."
+	#if you're using docker-machine, 127.0.0.1 needs to be replaced with your docker-machine ip
+	SNAP_TEST_RIEMANN="127.0.0.1:5555" go test -v --tags=integration ./... 
 fi

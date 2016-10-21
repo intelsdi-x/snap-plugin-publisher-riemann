@@ -98,10 +98,10 @@ func (r *riemannPublisher) Publish(contentType string, content []byte, config ma
 // publish sends events to riemann
 func (r *riemannPublisher) publish(event *raidman.Event, broker string) error {
 	c, err := raidman.Dial("tcp", broker)
-	defer c.Close()
 	if err != nil {
 		return err
 	}
+	defer c.Close()
 	return c.Send(event)
 }
 

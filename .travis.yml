@@ -3,7 +3,7 @@ sudo: true
 language: go
 go:
 - 1.6.3
-- 1.7.1
+- 1.7.3
 services:
   - docker
 env:
@@ -45,7 +45,7 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-publisher-riemann
     branch: master
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"
 - provider: s3
   access_key_id: AKIAINMB43VSSPFZISAA
   secret_access_key:
@@ -59,7 +59,7 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-publisher-riemann
     tags: true
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"
 - provider: releases
   api_key:
     secure: ZCT5p0pHvXvkGgXiGfAfs8MISpfQHDTGJI3esZIMiPeyGixZFDfc9l1xvXCYDDvMt3wE3S2lHLu+KSWu2md5qLh/p/1vRHGVCpe2M4lRu1Vtw6m3nWS34FMXmGaJwm0JWoxUOepz7hwrZfmOgwIMlIc1uDCWW1XmFzEORqUHO0EVU0jRQoxQfYGe6gUzYg/EuLItD4UnhD3awr3Amd+jLZaEUyLUvXZRIwzQnFIihT56wSpujserHOXc53jIPXxLxmwf4lncHkV+OO279jGyaxuenHEUYXlfCTApT0iOWhkDgKCO3whqdsPc2tGevQLogBO7FOIi13rHSWJMt9KsOYIsATc2EqiIM72Symkmx8BtlEoIW3a8ZQjJbxsj01eoHUXuEbK1zkoXJqqnMcUthe0r9kWBRkDtTpEKXZn9o4vBPZld+YhejUgruu9XcF9PsSjzwKnjgr4AaCIU0vStN5vQjr1+x+VrW2njYDPVLjHy7FzMkkFIxY8nZShCiYQ3JkfQSvUS1ttAvF8q8UVBiXkkUvELRc1+Qh15T89+QvjlW9iGNacSrrRomTRhie34P45f1vyGir+LRbKEKanC5wb2bK75TqzRNHZPDTwv9ANYOtbmipeq/8ipjwq8Z9U2phBg7SkAOe5l0FdRK/xPIEqoV9MnZHmNSbuz6RKzynY=
@@ -70,4 +70,4 @@ deploy:
   on:
     repo: intelsdi-x/snap-plugin-publisher-riemann
     tags: true
-    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.1"
+    condition: $TEST_TYPE = "build" && $TRAVIS_GO_VERSION = "1.7.3"

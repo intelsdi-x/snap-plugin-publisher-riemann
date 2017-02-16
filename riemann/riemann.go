@@ -85,24 +85,26 @@ func (r *riemannPublisher) Publish(contentType string, content []byte, config ma
 		return errors.New(fmt.Sprintf("Unknown content type '%s'", contentType))
 	}
 	logger.Printf("publishing %v to %v", metrics, config)
+
+	events := []*raidman.Event{}
 	for _, m := range metrics {
-		e := createEvent(m, config)
-		if err := r.publish(e, config["broker"].(ctypes.ConfigValueStr).Value); err != nil {
-			logger.Println(err)
-			return err
-		}
+		events = append(events, createEvent(m, config))
+	}
+	if err := r.publish(events, config["broker"].(ctypes.ConfigValueStr).Value); err != nil {
+		logger.Println(err)
+		return err
 	}
 	return nil
 }
 
 // publish sends events to riemann
-func (r *riemannPublisher) publish(event *raidman.Event, broker string) error {
+func (r *riemannPublisher) publish(events []*raidman.Event, broker string) error {
 	c, err := raidman.Dial("tcp", broker)
 	if err != nil {
 		return err
 	}
 	defer c.Close()
-	return c.Send(event)
+	return c.SendMulti(events)
 }
 
 func createEvent(m plugin.MetricType, config map[string]ctypes.ConfigValue) *raidman.Event {

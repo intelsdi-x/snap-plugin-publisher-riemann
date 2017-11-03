@@ -1,16 +1,18 @@
-hash: f99788e17338f0807110365785a8070fbc74523eb599253f0f28b51f9f44a4ca
-updated: 2016-12-01T14:02:25.377947063-08:00
+hash: 62cc5dd90c154937075474be3148b537a162ff66e0676131762be7ad6d75205d
+updated: 2017-11-04T02:14:14.850865512+08:00
 imports:
 - name: github.com/amir/raidman
-  version: 91c20f3f475cab75bb40ad7951d9bbdde357ade7
+  version: 1ccc43bfb9c93cb401a4025e49c64ba71e5e668b
   subpackages:
   - proto
+- name: github.com/asaskevich/govalidator
+  version: 9699ab6b38bee2e02cd3fe8b99ecf67665395c96
 - name: github.com/golang/protobuf
   version: 888eb0692c857ec880338addf316bd662d5e630e
   subpackages:
   - proto
 - name: github.com/intelsdi-x/snap
-  version: 8905198aaab5bfb6d50a747477ca401e3a7a33ab
+  version: 79e1dd457d77c985491c2f4746cbc425fb3dc2dd
   subpackages:
   - control/plugin
   - control/plugin/cpolicy
@@ -21,22 +23,25 @@ imports:
   - core/ctypes
   - core/serror
   - pkg/ctree
+  - pkg/fileutils
   - pkg/schedule
   - pkg/stringutils
   - scheduler/wmap
 - name: github.com/robfig/cron
   version: 32d9c273155a0506d27cf73dd1246e86a470997e
-- name: github.com/Sirupsen/logrus
-  version: d26492970760ca5d33129d2d799e34be5c4782eb
-- name: golang.org/x/net
-  version: 04557861f124410b768b1ba5bb3a91b705afbfc6
+- name: github.com/sirupsen/logrus
+  version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
+- name: golang.org/x/crypto
+  version: aedad9a179ec1ea11b7064c57cbc6dc30d7724ec
   subpackages:
-  - context
-  - http2
+  - openpgp
+  - ssh/terminal
+- name: golang.org/x/net
+  version: aabf50738bcdd9b207582cbe796b59ed65d56680
+  subpackages:
   - proxy
-  - trace
 - name: golang.org/x/sys
-  version: c8bc69bc2db9c57ccf979550bc69655df5039a8a
+  version: 7f918dd405547ecb864d14a8ecbbfe205b5f930f
   subpackages:
   - unix
 - name: gopkg.in/yaml.v2
@@ -49,12 +54,12 @@ testImports:
 - name: github.com/jtolds/gls
   version: 8ddce2a84170772b95dd5d576c48d517b22cac63
 - name: github.com/smartystreets/assertions
-  version: 443d812296a84445c202c085f19e18fc238f8250
+  version: 4ea54c1f28ad3ae597e76607dea3871fa177e263
   subpackages:
   - internal/go-render/render
   - internal/oglematchers
 - name: github.com/smartystreets/goconvey
-  version: d4c757aa9afd1e2fc1832aaab209b5794eb336e1
+  version: 9e8dc3f972df6c8fcc0375ef492c24d0bb204857
   subpackages:
   - convey
   - convey/gotest
